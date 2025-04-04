@@ -1,22 +1,21 @@
 'use client'
 import Footer from '@/app/Components/Footer';
-import { assets, blog_data } from '@/Assets/assets';
+import { assets } from '@/Assets/assets';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState,use } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const page = ({params}) => {
     const [data,setData] = useState(null);
-    const paramsVal = use(params);
-
     const fetchBlogData = async ()=>{
       const response = await axios.get('/api/blog',{
         params:{
-          id:params.id,
+          id:params.id
         }
       })
-      setData(response.data);
+      console.log(response.data.blogs)
+      setData(response.data.blogs);
     }
 
     useEffect(()=>{
@@ -43,20 +42,8 @@ const page = ({params}) => {
     </div>
     <div className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
        <Image src={data.image} width={1280} height={720} alt=''/>
-       <h1 className='my-8 text-[26px] font-semibold'>Introduction:</h1>
-       <p>{data.description}</p>
-       <h3 className='my-5 text-[18px] font-semibold '>Step 1: Self-Reflection and Goal Setting</h3>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <h3 className='my-5 text-[18px] font-semibold '>Step 2: Self-Reflection and Goal Setting</h3>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <h3 className='my-5 text-[18px] font-semibold '>Step 3: Self-Reflection and Goal Setting</h3>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <h3 className='my-5 text-[18px] font-semibold '>Step 4: Self-Reflection and Goal Setting</h3>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
-       <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding. Start by reflection your values</p>
+       <div className='blog-content' dangerouslySetInnerHTML={{__html:data.description}}></div>
+      
        <div className='my-24'>
         <p className='text-black font font-semibold my-4'>Share this article on social media</p>
         <div className='flex'>
