@@ -1,6 +1,7 @@
 'use client'
 import Footer from '@/app/Components/Footer';
 import { assets, blog_data } from '@/Assets/assets';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState,use } from 'react';
@@ -9,14 +10,13 @@ const page = ({params}) => {
     const [data,setData] = useState(null);
     const paramsVal = use(params);
 
-    const fetchBlogData = ()=>{
-      for(let i=0;i<blog_data.length;i++){
-        if(Number(paramsVal.id)===blog_data[i].id){
-            setData(blog_data[i]);
-            console.log(blog_data[i]);
-            break;
+    const fetchBlogData = async ()=>{
+      const response = await axios.get('/api/blog',{
+        params:{
+          id:params.id,
         }
-      }
+      })
+      setData(response.data);
     }
 
     useEffect(()=>{
@@ -37,7 +37,7 @@ const page = ({params}) => {
            </div>       
            <div className='text-center my-24'>
               <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] mx-auto'>{data.title}</h1>
-              <Image className='mx-auto mt-6 border border-white rounded-full' src={data.author_img} width={60} height={60} alt=''/>
+              <Image className='mx-auto mt-6 border border-white rounded-full' src={data.authorImg} width={60} height={60} alt=''/>
               <p className='mt-1 pb-2 text-lg max-w-[740px] mx-auto'>{data.author}</p>
         </div>      
     </div>
