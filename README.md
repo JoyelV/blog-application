@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blog Application
 
-## Getting Started
+A full-featured Blog Application built with Next.js, allowing users to read blogs, subscribe to newsletters, and providing admins with a dashboard to manage content and subscriptions.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Public Interface**:
+  - View all published blogs.
+  - Read detailed blog posts.
+  - Subscribe to the newsletter with email.
+- **Admin Panel**:
+  - **Dashboard**: specialized admin area.
+  - **Manage Blogs**: Add new blogs with title, description, category, author, and images. Delete existing blogs.
+  - **Manage Subscriptions**: View and delete email subscriptions.
+- **Backend**:
+  - Custom API endpoints for managing blogs and emails.
+  - MongoDB integration using Mongoose.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Directory)
+- **Frontend**: React, Tailwind CSS
+- **Database**: MongoDB (via Mongoose)
+- **Notifications**: React Toastify
+- **HTTP Client**: Axios
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📂 Project Structure
 
-## Learn More
+- `app/`: Next.js App Router pages and API routes.
+  - `admin/`: Admin panel routes (addProduct, blogList, subscriptions).
+  - `blogs/`: Public blog viewing routes.
+  - `api/`: Backend API routes (blog, email).
+- `components/`: Reusable UI components.
+- `lib/`: Utility libraries.
+  - `config/`: Database connection setup.
+  - `models/`: Mongoose models (Blog, Email).
+- `public/`: Static assets.
 
-To learn more about Next.js, take a look at the following resources:
+## 🏁 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Follow these instructions to set up the project locally.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites
 
-## Deploy on Vercel
+- Node.js installed.
+- A MongoDB connection string (URI).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/JoyelV/blog-application.git
+    cd blog-application
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Setup**:
+    Create a `.env` file in the root directory and add your MongoDB connection string:
+    ```env
+    MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/blog-app
+    ```
+
+4.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+5.  **Open the application**:
+    - Public View: [http://localhost:3000](http://localhost:3000)
+    - Admin Panel: [http://localhost:3000/admin](http://localhost:3000/admin) (or navigation link)
+
+## 📜 Scripts
+
+- `npm run dev`: Runs the app in development mode.
+- `npm run build`: Builds the app for production.
+- `npm start`: Starts the production server.
+- `npm run lint`: Runs ESLint.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
