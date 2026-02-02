@@ -1,23 +1,55 @@
-import { assets, blog_data } from '@/Assets/assets';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { ArrowRight, Calendar } from 'lucide-react';
+import Image from 'next/image';
 
-const BlogItem = ({id,image,category,description,title}) => {
+const BlogItem = ({ id, image, category, description, title, date }) => {
   return (
-    <div className='max-w-[330px] sm:max-w-[300px] bg-white border border-black hover:shadow-[-7px_7px_0px_#000000]'>
-      <Link href={`/blogs/${id}`}>
-        <Image src={image} alt='' width={400} height={400} className='border-b border-black'/>
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full border-border/60">
+      <Link href={`/blogs/${id}`} className="block relative aspect-video w-full overflow-hidden">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 hover:scale-105"
+        />
+      </Link>
+      <CardHeader className="pb-2 pt-4">
+        <div className="flex justify-between items-center mb-2">
+          <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70">
+            {category}
+          </Badge>
+          {date && (
+            <div className="flex items-center text-xs text-muted-foreground">
+              <Calendar size={12} className="mr-1" />
+              {new Date(date).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}
+            </div>
+          )}
+        </div>
+        <Link href={`/blogs/${id}`}>
+          <h3 className="font-bold text-xl leading-tight hover:text-primary transition-colors line-clamp-2">
+            {title}
+          </h3>
         </Link>
-      <p className='ml-5 mt-5 px-1 inline-block bg-black text-white text-sm'>{category}</p>
-      <div className="p-5">
-        <h5 className='mb-2 text-lg font-medium tracking-tight'>{title}</h5>
-        <p className='mb-3 text-sm tracking-tighter text-gray-700' dangerouslySetInnerHTML={{__html:description.slice(0,120)}}></p>
-        <Link href={`/blogs/${id}`} className='inline-flex items-center py-2 font-semibold text-center'>
-          Read More <Image src={assets.arrow} className='ml-2' alt='' width={12}/>
-          </Link>
-      </div>
-    </div>
+      </CardHeader>
+      <CardContent className="flex-grow pb-4">
+        <div
+          className="text-muted-foreground text-sm line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+      </CardContent>
+      <CardFooter className="pt-0">
+        <Link href={`/blogs/${id}`} className="w-full">
+          <Button variant="ghost" className="w-full justify-between hover:bg-transparent hover:text-primary p-0 h-auto">
+            Read More <ArrowRight size={16} className="ml-2" />
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }
 

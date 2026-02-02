@@ -1,35 +1,51 @@
-import { blog_data } from '@/Assets/assets'
-import React, { useEffect, useState } from 'react'
+"use client"
+import React from 'react'
 import BlogItem from './BlogItem'
-import axios from 'axios';
+import { Button } from './ui/button';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const BlogList = () => {
-    const [menu,setMenu] = useState('All');
-    const [blogs,setBlogs] = useState([]);
+const BlogList = ({ blogs, initialCategory = 'All' }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-    const fetchBlogs = async()=>{
-      const response = await axios.get('/api/blog');
-      setBlogs(response.data.blogs)
-      console.log(response.data.blogs);
+  const handleCategoryChange = (category) => {
+    const params = new URLSearchParams(searchParams);
+    if (category === 'All') {
+      params.delete('category');
+    } else {
+      params.set('category', category);
     }
+    router.replace(`/?${params.toString()}`, { scroll: false });
+  };
 
-    useEffect(()=>{
-      fetchBlogs();
-    },[]);
+  const currentCategory = searchParams.get('category') || 'All';
 
   return (
-    <div>
-      <div className='flex justify-center gap-6 my-10'>
-       <button onClick={()=>setMenu('All')} className={menu==='All'?'bg-black text-white py-1 px-4 rounded-sm':''}>All</button>
-       <button onClick={()=>setMenu('Technology')} className={menu==='Technology'?'bg-black text-white py-1 px-4 rounded-sm':''}>Technology</button>
-       <button onClick={()=>setMenu('Startup')} className={menu==='Startup'?'bg-black text-white py-1 px-4 rounded-sm':''}>Startup</button>
-       <button onClick={()=>setMenu('Lifestyle')} className={menu==='Lifestyle'?'bg-black text-white py-1 px-4 rounded-sm':''}>Lifestyle</button>
+    <div className="container mx-auto px-4 py-8">
+      <div className='flex justify-center gap-4 my-10 overflow-x-auto pb-4 sm:pb-0'>
+        {['All', 'Technology', 'Startup', 'Lifestyle'].map((category) => (
+          <Button
+            key={category}
+            onClick={() => handleCategoryChange(category)}
+            variant={currentCategory === category ? 'default' : 'outline'}
+            className="rounded-full px-6 transition-all duration-300"
+          >
+            {category}
+          </Button>
+        ))}
       </div>
-      <div className='flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24'>
-        {blogs.filter((item)=>menu==='All'?true:item.category===menu).map((item,index)=>{
-           return <BlogItem id={item._id} key={index} image={item.image} title={item.title} description={item.description} category={item.category}/>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16'>
+        {blogs.map((item, index) => {
+          return <BlogItem
+            id={item._id}
+            key={index}
+            image={item.image}
+            title={item.title}
+            description={item.description}
+            category={item.category}
+            date={item.date}
+          />
         })}
-
       </div>
     </div>
   )

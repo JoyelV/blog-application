@@ -2,7 +2,7 @@ import { assets } from '@/Assets/assets'
 import Image from 'next/image'
 import React from 'react'
 
-const BlogTableitem = ({ authorImg, title, author, date, deleteBlog, mongoId }) => {
+const BlogTableitem = ({ authorImg, title, author, date, category, deleteBlog, mongoId }) => {
   const BlogDate = new Date(date);
 
   return (
@@ -19,11 +19,20 @@ const BlogTableitem = ({ authorImg, title, author, date, deleteBlog, mongoId }) 
       </td>
 
       <td className='px-6 py-4'>
+        {category || "Uncategorized"}
+      </td>
+
+      <td className='px-6 py-4'>
         {BlogDate.toDateString()}
       </td>
 
-      <td className='px-6 py-4 text-red-500 cursor-pointer' onClick={() => deleteBlog(mongoId)}>
-        ✕
+      <td className='px-6 py-4 flex gap-4'>
+        <button onClick={() => window.location.href = `/admin/blogList/edit/${mongoId}`} className='text-blue-500'>
+          ✏️
+        </button>
+        <button className='text-red-500 cursor-pointer' onClick={() => deleteBlog(mongoId)}>
+          ✕
+        </button>
       </td>
     </tr>
   )
