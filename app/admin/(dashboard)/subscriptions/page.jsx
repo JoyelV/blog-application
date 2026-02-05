@@ -1,5 +1,5 @@
 'use client'
-import SubsTableitem from '@/app/Components/AdminComponents/SubsTableitem'
+import SubsTableItem from '@/app/Components/AdminComponents/SubsTableItem'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';

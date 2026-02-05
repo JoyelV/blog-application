@@ -2,7 +2,7 @@ import { assets } from '@/Assets/assets'
 import Image from 'next/image'
 import React from 'react'
 
-const BlogTableitem = ({ authorImg, title, author, date, category, deleteBlog, mongoId }) => {
+const BlogTableItem = ({ authorImg, title, author, date, category, deleteBlog, mongoId }) => {
   const BlogDate = new Date(date);
 
   return (
@@ -38,4 +38,4 @@ const BlogTableitem = ({ authorImg, title, author, date, category, deleteBlog, m
   )
 }
 
-export default BlogTableitem;
+export default BlogTableItem;
