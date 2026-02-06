@@ -13,6 +13,9 @@ export function SearchBar() {
     const [query] = useDebounce(text, 500)
 
     useEffect(() => {
+        const currentSearch = searchParams.get("search") || ""
+        if (currentSearch === query) return
+
         const params = new URLSearchParams(searchParams)
         if (query) {
             params.set("search", query)
