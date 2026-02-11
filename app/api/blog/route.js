@@ -260,5 +260,14 @@ export async function DELETE(request) {
     }
 
     await BlogModel.findByIdAndDelete(id);
+
+    // Revalidate cache
+    try {
+        const { revalidateTag } = await import('next/cache');
+        revalidateTag('blogs');
+    } catch (err) {
+        console.log("Error revalidating cache", err);
+    }
+
     return NextResponse.json({ success: true, msg: "Blog deleted" });
 }
