@@ -61,8 +61,8 @@ export async function POST(request) {
         imgUrl = result.secure_url;
         console.log("Image uploaded:", imgUrl); // Debug log
     } catch (error) {
-        console.error("Cloudinary Upload Error:", error);
-        return NextResponse.json({ error: "Image upload failed: " + error.message }, { status: 500 });
+        console.error("Cloudinary Upload Error Details:", error);
+        return NextResponse.json({ error: "Image upload failed: " + (error.message || error) }, { status: 500 });
     }
 
     // Fetch current admin user to get latest name/image
