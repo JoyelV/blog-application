@@ -1,6 +1,6 @@
 # Next.js Blog Application
 
-A full-featured blog application built with Next.js 14 (App Router), enabling users to read blogs and subscribe to newsletters, while administrators can manage content via a protected dashboard.
+A full-featured blog application built with Next.js 16 (App Router), enabling users to read blogs and subscribe to newsletters, while administrators can manage content via a protected dashboard.
 
 ## Features
 
@@ -23,7 +23,7 @@ A full-featured blog application built with Next.js 14 (App Router), enabling us
 
 ## Tech Stack
 
--   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+-   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **Database**: [MongoDB](https://www.mongodb.com/) (Mongoose ODM)
 -   **Authentication**: [NextAuth.js](https://next-auth.js.org/) (v5 Beta)
