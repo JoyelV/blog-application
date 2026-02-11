@@ -64,13 +64,14 @@ const BlogForm = ({
             <p className='text-2xl'>Upload Thumbnail</p>
             <label htmlFor="image">
                 <Image
-                    className='mt-4 object-cover'
+                    className='mt-4 object-cover cursor-pointer hover:opacity-80'
                     src={previewUrl || assets.upload_area}
                     width={140}
                     height={70}
-                    alt=''
+                    alt='Upload Thumbnail'
                 />
             </label>
+            <p className="text-sm text-gray-500 mt-1">Click image to upload</p>
             <input onChange={onImageChange} type="file" id='image' hidden required={!isEditMode} />
 
             <p className='text-xl mt-4'>Blog Title</p>

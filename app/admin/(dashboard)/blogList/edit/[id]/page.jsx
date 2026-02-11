@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import BlogForm from '@/app/Components/AdminComponents/BlogForm'
+import BlogForm from '@/app/components/AdminComponents/BlogForm'
 
 const EditBlog = () => {
     const params = useParams();

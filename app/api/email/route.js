@@ -1,5 +1,6 @@
 import ConnectDB from "@/lib/config/db";
 import EmailModel from "@/lib/models/EmailModel";
+import { sendEmail } from "@/lib/email";
 import { NextResponse } from "next/server";
 
 const LoadDB = async () => {
@@ -31,11 +32,21 @@ export async function POST(request) {
 
     try {
         await EmailModel.create(emailData);
+        // Send welcome email
+        const subject = "Welcome to Our Newsletter!";
+        const html = `
+            <h1>Welcome to the Blog Application!</h1>
+            <p>Thank you for subscribing to our newsletter. We're excited to have you on board.</p>
+            <p>Stay tuned for the latest updates and articles.</p>
+        `;
+        await sendEmail(emailData.email, subject, html);
+
         return NextResponse.json({ success: true, msg: "Email Subscription saved" });
     } catch (error) {
         if (error.code === 11000) {
             return NextResponse.json({ success: false, msg: "Email already exists" }, { status: 400 });
         }
+        console.error("Subscription Error:", error);
         return NextResponse.json({ success: false, msg: "Error saving subscription" }, { status: 500 });
     }
 }

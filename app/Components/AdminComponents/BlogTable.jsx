@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
-import BlogTableItem from '@/app/Components/AdminComponents/BlogTableItem'
+import BlogTableItem from '@/app/components/AdminComponents/BlogTableItem'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';

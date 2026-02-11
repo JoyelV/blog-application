@@ -23,11 +23,14 @@ const BlogSchema = z.object({
 
 export async function POST(request) {
     const session = await auth();
+    console.log("Blog POST Session:", session?.user?.email); // Debug log
+
     if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const formData = await request.formData();
+    console.log("Blog POST FormData keys:", Array.from(formData.keys())); // Debug log
 
     const image = formData.get("image");
     if (!image) {
@@ -45,6 +48,7 @@ export async function POST(request) {
 
     const validation = BlogSchema.safeParse(payload);
     if (!validation.success) {
+        console.log("Validation Error:", validation.error.flatten()); // Debug log
         return NextResponse.json({ error: validation.error.flatten() }, { status: 400 });
     }
 
@@ -55,9 +59,10 @@ export async function POST(request) {
         const buffer = Buffer.from(imageByteData);
         const result = await UploadImage(buffer);
         imgUrl = result.secure_url;
+        console.log("Image uploaded:", imgUrl); // Debug log
     } catch (error) {
         console.error("Cloudinary Upload Error:", error);
-        return NextResponse.json({ error: "Image upload failed" }, { status: 500 });
+        return NextResponse.json({ error: "Image upload failed: " + error.message }, { status: 500 });
     }
 
     // Fetch current admin user to get latest name/image
@@ -72,7 +77,7 @@ export async function POST(request) {
         image: imgUrl,
     }
 
-    await BlogModel.create(blogData);
+    const newBlog = await BlogModel.create(blogData);
 
     // Send email notification to subscribers
     try {
@@ -81,11 +86,15 @@ export async function POST(request) {
             const { sendEmail } = await import("@/lib/email");
             const emails = emailList.map(sub => sub.email);
             const emailSubject = `New Blog Post: ${payload.title}`;
+            const blogUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/blogs/${newBlog._id}`;
             const emailHtml = `
                 <h1>New Blog Post Alert!</h1>
                 <p>A new blog post titled "<strong>${payload.title}</strong>" has been published.</p>
                 <p>${payload.description}</p>
-                <p>Read more on our website!</p>
+                <div style="margin-top: 20px;">
+                    <a href="${blogUrl}" style="background-color: #000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Read More</a>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #666;">Or copy this link: ${blogUrl}</p>
             `;
             // Sending individually or as bcc to avoid exposing emails
             // For simplicity/demo: Loop or Single BCC
@@ -96,6 +105,14 @@ export async function POST(request) {
     } catch (emailError) {
         console.error("Error sending subscription emails:", emailError);
         // Not failing the blog creation if email fails
+    }
+
+    // Revalidate cache
+    try {
+        const { revalidateTag } = await import('next/cache');
+        revalidateTag('blogs');
+    } catch (err) {
+        console.log("Error revalidating cache", err);
     }
 
     return NextResponse.json({ success: true, msg: "Blog data saved successfully" });
@@ -194,17 +211,29 @@ export async function PUT(request) {
             const { sendEmail } = await import("@/lib/email");
             const emails = emailList.map(sub => sub.email);
             const emailSubject = `Blog Updated: ${updateData.title}`;
+            const blogUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/blogs/${blogId}`;
             const emailHtml = `
                 <h1>Blog Post Updated</h1>
                 <p>The blog post "<strong>${updateData.title}</strong>" has been updated.</p>
                 <p>${updateData.description || 'Check out the new changes!'}</p>
-                <p>Read more on our website!</p>
+                <div style="margin-top: 20px;">
+                    <a href="${blogUrl}" style="background-color: #000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Read More</a>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #666;">Or copy this link: ${blogUrl}</p>
             `;
             await Promise.all(emails.map(email => sendEmail(email, emailSubject, emailHtml)));
             console.log("Update emails sent");
         }
     } catch (emailError) {
         console.error("Error sending update emails:", emailError);
+    }
+
+    // Revalidate cache
+    try {
+        const { revalidateTag } = await import('next/cache');
+        revalidateTag('blogs');
+    } catch (err) {
+        console.log("Error revalidating cache", err);
     }
 
     return NextResponse.json({ success: true, msg: "Blog updated successfully" });

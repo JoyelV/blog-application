@@ -1,37 +1,35 @@
-const nodemailer = require('nodemailer');
 require('dotenv').config({ path: '.env.local' });
-require('dotenv').config({ path: '.env' });
+const nodemailer = require('nodemailer');
 
-async function testEmail() {
-    console.log("Testing Email configuration...");
-    console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Set" : "Not Set");
-    console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Set" : "Not Set");
+const user = process.env.EMAIL_USER;
+const pass = process.env.EMAIL_PASS?.replace(/\s+/g, ''); // Remove spaces if any
 
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.error("Missing credentials.");
-        return;
-    }
+console.log(`User: ${user}`);
+console.log(`Pass length: ${pass?.length}`);
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: user,
+        pass: pass,
+    },
+});
 
+const sendEmail = async (to, subject, html) => {
     try {
-        const info = await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER, // Send to self
-            subject: "Test Email from Blog App",
-            text: "If you receive this, email configuration is working!",
-        });
-        console.log("Email sent successfully!");
-        console.log("Message ID:", info.messageId);
-    } catch (error) {
-        console.error("Error sending test email:", error);
-    }
-}
+        console.log(`Sending email to ${to}...`);
+        const mailOptions = {
+            from: user,
+            to: to,
+            subject: subject,
+            html: html,
+        };
 
-testEmail();
+        const result = await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully:', result.messageId);
+    } catch (error) {
+        console.error("Error sending email:", JSON.stringify(error, null, 2));
+    }
+};
+
+sendEmail(user, 'Test Subject', '<h1>Test Body</h1>');

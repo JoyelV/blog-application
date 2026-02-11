@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminDashboard from '@/app/Components/AdminComponents/AdminDashboard'
+import AdminDashboard from '@/app/components/AdminComponents/AdminDashboard'
 import { getBlogs } from '@/lib/services/blog-service'
 
 const page = async () => {

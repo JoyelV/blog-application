@@ -103,7 +103,7 @@ const page = () => {
           </thead>
           <tbody>
             {emails.map((item, index) => {
-              return <SubsTableitem key={index} mongoId={item._id} email={item.email} date={item.date} deleteEmails={deleteEmails} />
+              return <SubsTableItem key={index} mongoId={item._id} email={item.email} date={item.date} deleteEmails={deleteEmails} />
             })}
           </tbody>
         </table>

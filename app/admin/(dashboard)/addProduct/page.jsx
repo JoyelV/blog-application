@@ -16,11 +16,12 @@ const page = () => {
         // For this MVP refactor, we'll force a reload or just clear fields by re-mounting.
         window.location.reload();
       } else {
-        toast.error("Error uploading");
+        toast.error(response.data.msg || "Error uploading");
       }
     } catch (error) {
-      toast.error("Error uploading");
-      console.error(error);
+      const errorMsg = error.response?.data?.error || error.response?.data?.msg || "Error uploading";
+      toast.error(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg));
+      console.error("Upload Error:", error);
     }
   }
 
