@@ -26,7 +26,9 @@ const BlogItem = ({ id, image, category, description, title, date }) => {
           {date && (
             <div className="flex items-center text-xs text-muted-foreground">
               <Calendar size={12} className="mr-1" />
-              {new Date(date).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}
+              <span suppressHydrationWarning>
+                {new Date(date).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
             </div>
           )}
         </div>

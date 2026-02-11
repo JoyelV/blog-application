@@ -22,7 +22,7 @@ const BlogTableItem = ({ authorImg, title, author, date, category, deleteBlog, m
         {category || "Uncategorized"}
       </td>
 
-      <td className='px-6 py-4'>
+      <td className='px-6 py-4' suppressHydrationWarning>
         {BlogDate.toDateString()}
       </td>
 
