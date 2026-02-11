@@ -1,12 +1,12 @@
-import Footer from '@/app/Components/Footer';
+import Footer from '@/app/components/Footer';
 import { assets } from '@/Assets/assets';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { getBlogById } from '@/lib/services/blog-service';
 import { notFound } from 'next/navigation';
-import Comments from '@/app/Components/Comments';
-import { Button } from '@/app/Components/ui/button';
+import Comments from '@/app/components/Comments';
+import { Button } from '@/app/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 export async function generateMetadata({ params }) {

@@ -2,7 +2,7 @@
 import React from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import BlogForm from '@/app/Components/AdminComponents/BlogForm'
+import BlogForm from '@/app/components/AdminComponents/BlogForm'
 
 const page = () => {
   const onSubmitHandler = async (formData) => {

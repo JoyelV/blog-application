@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Sidebar from "@/app/Components/AdminComponents/Sidebar";
+import Sidebar from "@/app/components/AdminComponents/Sidebar";
 import { assets } from "@/Assets/assets";
 import Link from "next/link";
 

@@ -50,7 +50,7 @@ A full-featured **Blog Application** built with **Next.js 15**, designed for a s
 │   │   └── email/          # Email subscription logic
 │   ├── blogs/              # Public blog pages
 │   │   └── [id]/           # Dynamic blog post view
-│   ├── Components/         # Reusable UI components (Header, Footer, etc.)
+│   ├── components/         # Reusable UI components (Header, Footer, etc.)
 │   └── page.js             # Landing page
 ├── lib/
 │   ├── config/             # Database connection (db.js)

@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { Button } from '@/app/Components/ui/button';
-import { Input } from '@/app/Components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/Components/ui/card';
+import { Button } from '@/app/components/ui/button';
+import { Input } from '@/app/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
 
 const Login = () => {
     const [email, setEmail] = useState("");

@@ -1,13 +1,13 @@
-import BlogList from "./Components/BlogList";
-import Footer from "./Components/Footer";
-import Header from "./Components/Header";
-import { SearchBar } from "./Components/SearchBar";
+import BlogList from "./components/BlogList";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { SearchBar } from "./components/SearchBar";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import { getBlogs } from "@/lib/services/blog-service";
 
-import Pagination from "./Components/Pagination";
+import Pagination from "./components/Pagination";
 
 export default async function Home({ searchParams }) {
   const params = await searchParams;

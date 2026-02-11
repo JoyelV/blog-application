@@ -1,6 +1,6 @@
 import React from 'react'
 import { getBlogs } from '@/lib/services/blog-service'
-import BlogTable from '@/app/Components/AdminComponents/BlogTable';
+import BlogTable from '@/app/components/AdminComponents/BlogTable';
 
 const page = async () => {
   // Fetch data directly on the server
